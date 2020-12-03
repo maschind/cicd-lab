@@ -77,7 +77,7 @@ pipeline {
         sh 'mvn sonar:sonar \
   -Dsonar.projectKey=org.jboss.quickstarts.eap:tasks \
   -Dsonar.host.url=http://sonarqube-9597-sonarqube.apps.cluster-c78c.c78c.example.opentlc.com \
-  -Dsonar.login=main'
+  -Dsonar.login=main -Dsonar.password=735faebc594e01431c1814f3883975ef8a380a26'
               
       }
     }
