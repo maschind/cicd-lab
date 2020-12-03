@@ -51,7 +51,7 @@ pipeline {
 
         //withMaven {
           //sh mvnCmd
-          sh mvnCmd + " mvn clean package -DskipTests"
+          sh mvnCmd + " clean package -DskipTests"
         //}
 
       }
@@ -62,7 +62,7 @@ pipeline {
       steps {
         echo "Running Unit Tests"
 
-        // TBD
+        sh "mvn test"
       }
     }
 
