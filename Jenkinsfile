@@ -83,7 +83,7 @@ pipeline {
       steps {
         echo "Publish to Nexus"
 
-        // TBD
+        sh 'mvn deploy'
 
       }
     }
