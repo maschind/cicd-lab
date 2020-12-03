@@ -49,8 +49,6 @@ pipeline {
       steps {
         echo "Building version ${devTag}"
 
-        def mvnCmd = "mvn -s ./nexus_openshift_settings.xml"
-
         withMaven {
           sh "mvnCmd"
           sh "mvn clean package -DskipTests"
