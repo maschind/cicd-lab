@@ -73,11 +73,7 @@ pipeline {
 
         // TBD 4C730552-AXYjfwRXlWI5vWMcliFy
         // sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://sonarqube.9597-sonarqube.svc.cluster.local:9000 -Dsonar.projectName=${JOB_BASE_NAME}'
-
-        sh 'mvn sonar:sonar \
-  -Dsonar.projectKey=org.jboss.quickstarts.eap:tasks \
-  -Dsonar.host.url=http://sonarqube-9597-sonarqube.apps.cluster-c78c.c78c.example.opentlc.com \
-  -Dsonar.login=main -Dsonar.password=735faebc594e01431c1814f3883975ef8a380a26'
+        sh 'mvn sonar:sonar -Dsonar.host.url=http://sonarqube-9597-sonarqube.apps.cluster-c78c.c78c.example.opentlc.com -Dsonar.projectVersion=${devTag} -Dsonar.projectName=${JOB_BASE_NAME}" 
               
       }
     }
