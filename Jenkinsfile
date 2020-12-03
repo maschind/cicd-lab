@@ -49,10 +49,10 @@ pipeline {
       steps {
         echo "Building version ${devTag}"
 
-        withMaven {
-          sh "mvnCmd"
-          sh "mvn clean package -DskipTests"
-        }
+        //withMaven {
+          //sh mvnCmd
+          sh mvnCmd + " mvn clean package -DskipTests"
+        //}
 
       }
     }
