@@ -24,7 +24,7 @@ pipeline {
     stage('Checkout Source') {
       steps {
         // TBD: Get code from protected Git repository
-        git url: https://maschind:password@gogs-gogs-9597-gogs.apps.cluster-c78c.c78c.example.opentlc.com/CICDLabs/openshift-tasks-private.git
+        git url: 'https://maschind:password@gogs-gogs-9597-gogs.apps.cluster-c78c.c78c.example.opentlc.com/CICDLabs/openshift-tasks-private.git'
 
 
        script {
