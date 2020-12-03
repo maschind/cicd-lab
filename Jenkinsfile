@@ -49,7 +49,7 @@ pipeline {
       steps {
         echo "Building version ${devTag}"
 
-        mvnCmd = "mvn -s ./nexus_openshift_settings.xml"
+        def mvnCmd = "mvn -s ./nexus_openshift_settings.xml"
 
         withMaven {
           sh "mvnCmd"
