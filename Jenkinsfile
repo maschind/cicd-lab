@@ -72,7 +72,7 @@ pipeline {
         echo "Running Code Analysis"
 
         // TBD 4C730552-AXYjfwRXlWI5vWMcliFy
-        sh 'mvn clean package sonar:sonar -Dsonar.host.url=sonarqube.9597-sonarqube.svc.cluster.local -Dsonar.projectName=${JOB_BASE_NAME}'
+        sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://sonarqube.9597-sonarqube.svc.cluster.local:9000 -Dsonar.projectName=${JOB_BASE_NAME}'
               
       }
     }
@@ -205,7 +205,7 @@ pipeline {
 
   post {
         always {
-            junit 'build/reports/**/*.xml'
+            junit '**/target/surefire-reports/*.xml'
         }
     }
 
