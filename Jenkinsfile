@@ -62,7 +62,7 @@ pipeline {
       steps {
         echo "Running Unit Tests"
 
-        sh "mvn test"
+        sh mvnCmd + " test"
       }
     }
 
@@ -73,7 +73,7 @@ pipeline {
 
         // TBD 4C730552-AXYjfwRXlWI5vWMcliFy
         // sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://sonarqube.9597-sonarqube.svc.cluster.local:9000 -Dsonar.projectName=${JOB_BASE_NAME}'
-        sh 'mvn sonar:sonar -Dsonar.host.url=http://sonarqube-9597-sonarqube.apps.cluster-c78c.c78c.example.opentlc.com -Dsonar.projectName=${JOB_BASE_NAME} -Dsonar.projectVersion=${devTag}'
+        sh mvnCmd + ' sonar:sonar -Dsonar.host.url=http://sonarqube-9597-sonarqube.apps.cluster-c78c.c78c.example.opentlc.com -Dsonar.projectName=${JOB_BASE_NAME} -Dsonar.projectVersion=${devTag}'
               
       }
     }
@@ -83,7 +83,7 @@ pipeline {
       steps {
         echo "Publish to Nexus"
 
-        sh 'mvn deploy'
+        sh mvnCmd + ' deploy -Dsonatype-nexus-staging.username'
 
       }
     }
