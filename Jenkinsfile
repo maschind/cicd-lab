@@ -1,5 +1,5 @@
 // Set your project Prefix using your GUID
-def prefix      = "GUID"
+def prefix      = "9597"
 
 // Set variable globally to be available in all stages
 // Set Maven command to always include Nexus Settings
