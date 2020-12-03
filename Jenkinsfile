@@ -71,8 +71,10 @@ pipeline {
       steps {
         echo "Running Code Analysis"
 
-        // TBD
-
+        // TBD 4C730552-AXYjfwRXlWI5vWMcliFy
+        withSonarQubeEnv('My SonarQube Server') {
+                 sh 'mvn clean package sonar:sonar -Dsonar.host.url=sonarqube.9597-sonarqube.svc.cluster.local -Dsonar.projectName=${JOB_BASE_NAME}'
+              }
       }
     }
 
