@@ -32,7 +32,7 @@ pipeline {
           def version = pom.version
 
           // Set the tag for the development image: version + build number.
-          devTag = pom.version + "- + currentBuild.number            
+          devTag = pom.version + "-" + currentBuild.number            
           // Set the tag for the production image: version           
 
           prodTag = pom.version                      
@@ -49,7 +49,12 @@ pipeline {
       steps {
         echo "Building version ${devTag}"
 
-        // TBD
+        mvnCmd = "mvn -s ./nexus_openshift_settings.xml"
+
+        withMaven {
+          sh "mvnCmd"
+          sh "mvn clean package -DskipTests"
+        }
 
       }
     }
