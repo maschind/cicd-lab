@@ -31,11 +31,13 @@ pipeline {
           def pom = readMavenPom file: 'pom.xml'
           def version = pom.version
 
-          // TBD: Set the tag for the development image: version + build number.
-          // Example: def devTag  = "0.0-0"
+          // Set the tag for the development image: version + build number.
+          devTag = pom.version + "- + currentBuild.number            
+          // Set the tag for the production image: version           
 
-          // TBD: Set the tag for the production image: version
-          // Example: def prodTag = "0.0"
+          prodTag = pom.version                      
+          echo "Dev build tag is ${devTag}"           
+          echo "Prod build tag is ${prodTag}"
 
         }
       }
