@@ -94,7 +94,7 @@ pipeline {
         echo "Building OpenShift container image tasks:${devTag}"
         script {
           openshift.withCluster(){
-            openshift.withProject("user15-tasks-dev"){
+            openshift.withProject("${prefix}-tasks-dev"){
                 def bc = openshift.selector("buildconfig/tasks")
                 bc.describe()
                 bc.startBuild("--from-file=http://nexus.${prefix}-nexus.svc.cluster.local:8081/repository/releases/org/jboss/quickstarts/eap/tasks/${prodTag}/tasks-${prodTag}.war")
