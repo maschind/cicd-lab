@@ -24,7 +24,7 @@ pipeline {
     stage('Checkout Source') {
       steps {
         // TBD: Get code from protected Git repository
-        git url: 'https://maschind:password@gogs-gogs-${prefix}-gogs.apps.cluster-c78c.c78c.example.opentlc.com/CICDLabs/openshift-tasks-private.git'
+        git url: "https://maschind:password@gogs-gogs-${prefix}-gogs.apps.cluster-c78c.c78c.example.opentlc.com/CICDLabs/openshift-tasks-private.git"
 
 
        script {
@@ -73,7 +73,7 @@ pipeline {
 
         // TBD 4C730552-AXYjfwRXlWI5vWMcliFy
         // sh 'mvn clean package sonar:sonar -Dsonar.host.url=http://sonarqube.9597-sonarqube.svc.cluster.local:9000 -Dsonar.projectName=${JOB_BASE_NAME}'
-        sh mvnCmd + ' sonar:sonar -Dsonar.host.url=http://sonarqube-${prefix}-sonarqube.apps.cluster-c78c.c78c.example.opentlc.com -Dsonar.projectName=${JOB_BASE_NAME} -Dsonar.projectVersion=${devTag}'
+        sh mvnCmd + " sonar:sonar -Dsonar.host.url=http://sonarqube-${prefix}-sonarqube.apps.cluster-c78c.c78c.example.opentlc.com -Dsonar.projectName=${JOB_BASE_NAME} -Dsonar.projectVersion=${devTag}"
               
       }
     }
