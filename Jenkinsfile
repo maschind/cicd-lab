@@ -130,9 +130,18 @@ pipeline {
     stage('Deploy to Dev') {
       steps {
         echo "Deploy container image to Development Project"
+        script {
+          openshift.withCluster(){
+            openshift.withProject("${prefix}-tasks-dev"){
+              // 1. Update the image on the dev deployment config
+              // def bc = openshift.selector("buildconfig/tasks")
+              echo "Modifying tasks deployment to deploy image with tag ${devTag}"
+              openshift.set("image", "dc/tasks", "tasks=image-registry.openshift-image-registry.svc:5000/${prefix}-tasks-dev/tasks:${devTag}")
+            }
+          }
+        }
 
         // TBD: Deploy the image
-        // 1. Update the image on the dev deployment config
         // 2. Recreate the config maps with the potentially changed properties files
         // 3. Redeploy the dev deployment
         // 4. Wait until the deployment is running
