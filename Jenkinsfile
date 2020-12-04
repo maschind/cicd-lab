@@ -210,8 +210,9 @@ pipeline {
           // TBD: Tag the built image with the production tag.
 
           openshift.withCluster() {
-          openshift.withProject("${prodProject}") {
-            openshift.tag("${devProject}/tasks:${devTag}", "${devProject}/tasks:${prodTag}")
+            openshift.withProject("${prodProject}") {
+              openshift.tag("${devProject}/tasks:${devTag}", "${devProject}/tasks:${prodTag}")
+            }
           }
         }
       }
@@ -223,14 +224,17 @@ pipeline {
     stage('Blue/Green Production Deployment') {
       steps {
         echo "Blue/Green Deployment"
+        script {
 
-        // TBD: 1. Determine which application is active
+        
+        //      1. Determine which application is active
         //      2. Update the image for the other application
         //      3. Deploy into the other application
         //      4. Recreate Config maps for other application
         //      5. Wait until application is running
         //         See above for example code
 
+        }
       }
     }
 
