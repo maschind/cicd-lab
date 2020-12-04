@@ -92,6 +92,26 @@ pipeline {
     stage('Build and Tag OpenShift Image') {
       steps {
         echo "Building OpenShift container image tasks:${devTag}"
+        openshift.withCluster(){
+            openshift.withProject("user15-tasks-dev"){
+                def bc = openshift.selector("buildconfig/tasks")
+                bc.describe()
+                bc.startBuild("--from-file=http://nexus.${prefix}-nexus.svc.cluster.local:8081/repository/releases/org/jboss/quickstarts/eap/tasks/${prodTag}/tasks-${prodTag}.war")
+
+                def builds = bc.related('builds')
+
+                timeout(10) {
+                    echo "Waiting for builds to complete..."
+
+                    builds.untilEach(1) {
+                        return it.object().status.phase == "Complete"
+                    }
+                }
+
+                echo "Tagging tasks:latest with tasks:${devTag}"
+                openshift.tag("tasks:latest", "tasks:${devTag}")
+            }
+        }
 
         // TBD: Start binary build in OpenShift using the file we just published.
         // Either use the file from your
@@ -100,26 +120,6 @@ pipeline {
         // your current Jenkins workspace).
         // OR use the file you just published into Nexus:
         // "--from-file=http://nexus.${prefix}-nexus.svc.cluster.local:8081/repository/releases/org/jboss/quickstarts/eap/tasks/${prodTag}/tasks-${prodTag}.war"
-            openshift.withCluster(){
-                openshift.withProject("user15-tasks-dev"){
-                    def bc = openshift.selector("buildconfig/tasks")
-                    bc.describe()
-                    bc.startBuild("--from-file=http://nexus.${prefix}-nexus.svc.cluster.local:8081/repository/releases/org/jboss/quickstarts/eap/tasks/${prodTag}/tasks-${prodTag}.war")
-
-                    def builds = bc.related('builds')
-
-                    timeout(10) {
-                        echo "Waiting for builds to complete..."
-
-                        builds.untilEach(1) {
-                            return it.object().status.phase == "Complete"
-                        }
-                    }
-
-                    echo "Tagging tasks:latest with tasks:${devTag}"
-                    openshift.tag("tasks:latest", "tasks:${devTag}")
-                }
-            }
 
       }
     }
