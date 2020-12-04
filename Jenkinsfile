@@ -137,12 +137,20 @@ pipeline {
               // def bc = openshift.selector("buildconfig/tasks")
               echo "Modifying tasks deployment to deploy image with tag ${devTag}"
               openshift.set("image", "dc/tasks", "tasks=image-registry.openshift-image-registry.svc:5000/${prefix}-tasks-dev/tasks:${devTag}")
+
+              // 2. Recreate the config maps with the potentially changed properties files
+              openshift.selector('configmap', 'tasks-config').delete()
+              def configmap = openshift.create('configmap', 'tasks-config', '--from-file=./configuration/application-users.properties', '--from-file=./configuration/application-roles.properties' )
+
+              // 3. Redeploy the dev deployment
+              // Deploy the development application.
+              openshift.selector("dc", "tasks").rollout().latest();
+              
             }
           }
         }
 
         // TBD: Deploy the image
-        // 2. Recreate the config maps with the potentially changed properties files
         // 3. Redeploy the dev deployment
         // 4. Wait until the deployment is running
         //    The following code will accomplish that by
