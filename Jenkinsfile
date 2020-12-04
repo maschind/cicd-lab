@@ -63,6 +63,7 @@ pipeline {
         echo "Running Unit Tests"
 
         // sh mvnCmd + " test"
+        // junit '**/target/surefire-reports/*.xml'
       }
     }
 
@@ -223,8 +224,8 @@ pipeline {
     // Do not activate the new version yet.
     stage('Blue/Green Production Deployment') {
       steps {
-        echo "Blue/Green Deployment"
         script {
+          echo "Blue/Green Deployment"
 
         
         //      1. Determine which application is active
@@ -249,11 +250,5 @@ pipeline {
       }
     }
   }
-
-  post {
-        always {
-            junit '**/target/surefire-reports/*.xml'
-        }
-    }
 
 }
