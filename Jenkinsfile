@@ -92,7 +92,8 @@ pipeline {
     stage('Build and Tag OpenShift Image') {
       steps {
         echo "Building OpenShift container image tasks:${devTag}"
-        openshift.withCluster(){
+        script {
+          openshift.withCluster(){
             openshift.withProject("user15-tasks-dev"){
                 def bc = openshift.selector("buildconfig/tasks")
                 bc.describe()
@@ -111,6 +112,7 @@ pipeline {
                 echo "Tagging tasks:latest with tasks:${devTag}"
                 openshift.tag("tasks:latest", "tasks:${devTag}")
             }
+          }
         }
 
         // TBD: Start binary build in OpenShift using the file we just published.
